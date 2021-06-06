@@ -24,3 +24,24 @@ for kk=1:length(Lines)
     Trips=unique(sort(TripNr(tp)));
     tripsOfLines(1:length(Trips),kk)=Trips;
 end
+
+ListOfPossible=[];
+figure(1000),hold on
+for kk=1:maxLines
+    for gg=1:maxTripsList
+        if tripsOfLines(gg,kk)>0
+            tu=find(TripNr==tripsOfLines(gg,kk) & LineNr==Lines(kk));
+ 
+            lat=Latitude(tu);
+            lon=Longitude(tu);
+            checkStaionarityOfBus=unique(lon);
+            
+            if (length(checkStaionarityOfBus)>20 && sum(lon==0)==0)
+%                 figure,plot(lon,lat,'*'),title(['the pathway of Line= ',num2str(Lines(kk)),' and Tripr= ', num2str(tripsOfLines(gg,kk))])
+                ListOfPossible=[ListOfPossible;Lines(kk),tripsOfLines(gg,kk)];
+            else
+%                 figure(1000),plot(lon,lat,'*')
+            end
+        end
+    end
+end
