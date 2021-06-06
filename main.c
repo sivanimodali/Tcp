@@ -45,3 +45,37 @@ for kk=1:maxLines
         end
     end
 end
+
+lonV=[];latV=[];delayV=[];
+for kk=1:1;%83
+    line1=ListOfPossible(kk,1);
+    trip1=ListOfPossible(kk,2);
+    tu=find(TripNr==trip1 & LineNr==line1);
+    lat=Latitude(tu);
+    lon=Longitude(tu);
+    delay=Delay(tu);
+    lonV=[lonV,lon'];latV=[latV,lat'];delayV=[delayV,delay'];
+end
+ figure,plot(lonV,latV,'*')
+% wm = webmap('World Imagery');
+% s = geoshape(latV,lonV);%latitude,longitude);
+% wmline(s,'Color', 'red', 'Width', 3);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+lonVV=lonV;
+lonVV=lonVV-min(lonVV);
+lonVV=lonVV/max(lonVV);
+lonVV=lonVV+0.01;
+%%%%%%%%
+latVV=latV;
+latVV=latVV-min(latVV);
+latVV=latVV/max(latVV);
+latVV=latVV+0.01;
+%%%%%%%%%
+P=[lonVV',latVV'];
+DT = delaunayTriangulation(P);
+ 
+IC = incenter(DT);
+figure,triplot(DT)
+hold on
+plot(IC(:,1),IC(:,2),'*r')
