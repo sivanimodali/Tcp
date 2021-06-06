@@ -54,13 +54,9 @@ for kk=1:1;%83
     lat=Latitude(tu);
     lon=Longitude(tu);
     delay=Delay(tu);
-    lonV=[lonV,lon'];latV=[latV,lat'];delayV=[delayV,delay'];
+lonV=[lonV,lon'];latV=[latV,lat'];delayV=[delayV,delay'];
 end
  figure,plot(lonV,latV,'*')
-% wm = webmap('World Imagery');
-% s = geoshape(latV,lonV);%latitude,longitude);
-% wmline(s,'Color', 'red', 'Width', 3);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 lonVV=lonV;
 lonVV=lonVV-min(lonVV);
@@ -79,3 +75,13 @@ IC = incenter(DT);
 figure,triplot(DT)
 hold on
 plot(IC(:,1),IC(:,2),'*r')
+
+p.faces = DT.ConnectivityList;
+p.vertices = DT.Points* 1200;
+ 
+% rasterize it
+I = patch_rasterize(p);
+% I = patch_rasterize();
+figure, hold on;
+imagesc(I); axis image;
+triplot(p.faces, p.vertices(:,1), p.vertices(:,2), 'color', 'white');
