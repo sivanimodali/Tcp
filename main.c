@@ -12,3 +12,15 @@ UnitId=one_patch(:,7);%UnitId  : float  101222 1012   14 101260 100458 101204 10
 TripNr=one_patch(:,9);%TripNr  : float  41 31 20 53 98 42 29 14 27 10 ..
 Latitude=one_patch(:,8);%Latitude      : float  56.2 56.2 56.2 56.3 56.2 ...
 Longitude=one_patch(:,3);%Lo
+
+Lines=unique(sort(LineNr));
+maxLines=length(Lines);
+maxTripsList=length(unique(sort(TripNr)));
+ 
+tripsOfLines=zeros(maxTripsList,maxLines);
+ 
+for kk=1:length(Lines)
+    tp=find(LineNr==Lines(kk));
+    Trips=unique(sort(TripNr(tp)));
+    tripsOfLines(1:length(Trips),kk)=Trips;
+end
